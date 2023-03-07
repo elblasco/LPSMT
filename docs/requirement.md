@@ -13,7 +13,7 @@
 - When clicking on the preview text open the keyboard
 - Above the keyboard there should be a button list insert markdown syntax
 - The keyboard must be the system one
-- There must be a button to open a file drawer
+- There must be a button to open a file explorer
 
 -------------------------------------------------------------------------------
 
@@ -28,6 +28,7 @@
 ### File explorer fragment
 <img alt="file explorer fragment image" src="/docs/assets/file_explorer_fragment.png" style="width: 76mm;">
 
+- Should be displayed a file explorer of the server that the user has setted up
 
 -------------------------------------------------------------------------------
 
