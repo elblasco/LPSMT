@@ -51,5 +51,5 @@
   - SFTP
   - NextCloud
 - The application can be connected to only one server
-- The connection to a server must be persistent during the time
-- The user can disconnect to a server in anytime
+- The connection to a server must be persistent
+- The user can disconnect from a server at anytime
