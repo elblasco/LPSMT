@@ -29,6 +29,7 @@
 <img alt="file explorer fragment image" src="/docs/assets/file_explorer_fragment.png" style="width: 76mm;">
 
 - Should be displayed a file explorer of the server that the user has setted up
+- The title of the fragment is the name of the server that the user has chosen
 
 -------------------------------------------------------------------------------
 
