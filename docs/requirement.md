@@ -11,9 +11,9 @@
 - There should a button to preview the document (if the library dose not support live preview)
 - Show the name of the file
 - When clicking on the preview text open the keyboard
-- Above the keyboard there should be a botton list insert markdown syntax
+- Above the keyboard there should be a button list insert markdown syntax
 - The keyboard must be the system one
-- There must be a botton to open a navigation
+- There must be a button to open a file drawer
 
 -------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@
 <img alt="slide menu fragment image" src="/docs/assets/slide_menu_fragment.png" style="width: 76mm;">
 
 - There should be a current directory overview with file and folder
-- There should be a botton to search in a sorted tree like index a file
+- There should be a button to search in a sorted tree like index a file
 
 -------------------------------------------------------------------------------
 
@@ -34,6 +34,8 @@
 ### Settings fragment
 <img alt="settings fragment image" src="/docs/assets/settings_fragment.png" style="width: 76mm;">
 
+- Should be a setting to change font and size of the text in the editor fragment
+- Must be a menu where the user can set up a connection to a server 
 
 -------------------------------------------------------------------------------
 
@@ -49,3 +51,5 @@
   - SFTP
   - NextCloud
 - The application can be connected to only one server
+- The connection to a server must be persistent during the time
+- The user can disconnect to a server in anytime
