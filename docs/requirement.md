@@ -2,6 +2,7 @@
 ## Functional
 ### Editor fragment
 <img alt="editor fragment image" src="/docs/assets/editor_fragment.png" style="width: 76mm;">
+
 - The application needs to start with an empty document after the start up 
 - Display a section where an user can see a `.md` file
 - Display a section where an user can edit a `.md` file
@@ -18,6 +19,7 @@
 
 ### Slide fragment
 <img alt="slide menu fragment image" src="/docs/assets/slide_menu_fragment.png" style="width: 76mm;">
+
 - There should be a current directory overview with file and folder
 - There should be a botton to search in a sorted tree like index a file
 
@@ -26,10 +28,12 @@
 ### File explorer fragment
 <img alt="file explorer fragment image" src="/docs/assets/file_explorer_fragment.png" style="width: 76mm;">
 
+
 -------------------------------------------------------------------------------
 
 ### Settings fragment
 <img alt="settings fragment image" src="/docs/assets/settings_fragment.png" style="width: 76mm;">
+
 
 -------------------------------------------------------------------------------
 
