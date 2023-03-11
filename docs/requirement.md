@@ -20,38 +20,49 @@
 ### Slide fragment
 <img alt="slide menu fragment image" src="/docs/assets/slide_menu_fragment.png" style="width: 76mm;">
 
-- There should be a current directory overview with file and folder
-- There should be a button to search in a sorted tree like index a file
+- There should be a current directory overview with files and folders
+- There should be a button to search a local file in a ranked list
+
+-------------------------------------------------------------------------------
+
+### Connections fragment
+<img alt="connections fragment image" src="/docs/assets/connections_fragment.png" style="width: 76mm;">
+
+- The user can select one server
+- The user can fill a form to connect to a specific server (ip and port)
 
 -------------------------------------------------------------------------------
 
 ### File explorer fragment
 <img alt="file explorer fragment image" src="/docs/assets/file_explorer_fragment.png" style="width: 76mm;">
 
-- Should be displayed a file explorer of the server that the user has setted up
+- Should be displayed a file explorer of the server that the user has set up
 - The title of the fragment is the name of the server that the user has chosen
 
 -------------------------------------------------------------------------------
 
-### Settings fragment
-<img alt="settings fragment image" src="/docs/assets/settings_fragment.png" style="width: 76mm;">
+### Fonts fragment
+<img alt="fonts fragment image" src="/docs/assets/fonts_fragment.png" style="width: 76mm;">
 
-- Should be a setting to change font and size of the text in the editor fragment
-- Must be a menu where the user can set up a connection to a server 
+- The user can change fonts properties
 
 -------------------------------------------------------------------------------
 
 ## Non functional
 - Open only `.md` files
 - The only Markdown syntax accepted is the one supported by one of this library:
-  - [[tree sitter library]](https://github.com/MDeiml/tree-sitter-markdown)
+  - [[Tree sitter library]](https://github.com/MDeiml/tree-sitter-markdown)
   - [[Markwon]](https://github.com/noties/Markwon)
 - Compatible with Android 9 API level 28 and above
 - All the error message shown to the user must be specific and informative for the error that occurred
 - The application should support the following file server:
   - Samba
-  - SFTP
-  - NextCloud
+  - FTP
 - The application can be connected to only one server
 - The connection to a server must be persistent
 - The user can disconnect from a server at anytime
+- Use a pre-trained neural network (*2vec) to look for similar keywords
+- Use the score produced by the neural network to index the most similar documents
+- 
+## Note
+- [Samba library](https://github.com/hierynomus/smbj)
