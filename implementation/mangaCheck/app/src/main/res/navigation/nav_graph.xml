@@ -6,7 +6,11 @@
     <fragment
         android:id="@+id/readingListFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.reading_list.ReadingListFragment"
-        android:label="ReadingListFragment" />
+        android:label="ReadingListFragment">
+        <action
+            android:id="@+id/action_readingListFragment_to_addReadingFragment"
+            app:destination="@id/addReadingByNameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/libraryFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.library.LibraryFragment"
@@ -26,7 +30,7 @@
     <fragment android:id="@+id/fileManager" />
     <dialog
         android:id="@+id/updateComicDialog"
-        android:name="it.unitn.disi.lpsmt.g03.mangacheck.update_comic.UpdateComicDialog"
+        android:name="it.unitn.disi.lpsmt.g03.mangacheck.update_comic.UpdateComicDialogFragment"
         android:label="UpdateComicDialog" />
     <fragment
         android:id="@+id/addLibraryFragment"
@@ -37,14 +41,49 @@
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.info_reading.InfoReadingDialogFragment"
         android:label="InfoReadingDialogFragment" />
     <fragment
-        android:id="@+id/addReadingFragment"
-        android:name="it.unitn.disi.lpsmt.g03.mangacheck.add_reading.AddReadingFragment"
-        android:label="AddReadingFragment" />
+        android:id="@+id/addReadingByNameFragment"
+        android:name="it.unitn.disi.lpsmt.g03.mangacheck.add_reading.by_name.AddReadingByNameFragment"
+        android:label="AddReadingFragmentByNameFragment">
+        <action
+            android:id="@+id/action_addReadingByName_to_addReadingSetStatus"
+            app:destination="@id/addReadingSetStatusFragment">
+            <argument
+                android:name="mangaID"
+                app:argType="integer"/>
+            <argument
+                android:name="mangaTitle"
+                app:argType="string"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/addReadingSetStatusFragment"
+        android:name="it.unitn.disi.lpsmt.g03.mangacheck.add_reading.set_status.AddReadingSetStatusFragment"
+        android:label="AddReadingFragmentSetStatusFragment">
+        <action
+            android:id="@+id/action_addReadingSetStatus_to_readingListFragment"
+            app:destination="@id/readingListFragment">
+            <argument
+                android:name="mangaID"
+                app:argType="integer"/>
+            <argument
+                android:name="mangaTitle"
+                app:argType="string"/>
+            <argument
+                android:name="list"
+                app:argType="string"/>
+            <argument
+                android:name="mangaImage"
+                app:argType="string"/>
+            <argument
+                android:name="mangaDescription"
+                app:argType="string"/>
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/readerFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.reader.ReaderFragment"
         android:label="ReaderFragment" />
-    <fragment
+    <dialog
         android:id="@+id/searchDialogFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.search.SearchDialogFragment"
         android:label="SearchDialogFragment" />

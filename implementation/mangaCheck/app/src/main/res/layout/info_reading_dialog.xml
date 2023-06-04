@@ -1,43 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <Button
-        android:layout_width="@dimen/U_6"
-        android:layout_height="@dimen/U_6"
-        android:background="@color/black"/>
+        android:id="@+id/dismiss_dialog"
+        android:layout_width="@dimen/U_3"
+        android:layout_height="@dimen/U_3"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/U_2"
+        android:layout_marginEnd="@dimen/U_6"
+        android:background="@drawable/exit_icon"
+        android:elevation="@dimen/U_1" />
 
     <LinearLayout
-        android:background="@drawable/basic_surface"
-        android:elevation="@dimen/U_half"
-        android:id="@+id/titolo_descrizione_capitolo"
+        android:id="@+id/dialog_reading_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@drawable/basic_surface"
+        android:clipChildren="false"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/U_4"
+        android:padding="?dialogPreferredPadding">
 
         <TextView
             android:id="@+id/manga_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?colorOnPrimaryContainer"
-            android:text="@string/missing"
-            android:gravity="center"
+            android:layout_marginTop="@dimen/U_2"
             android:layout_marginBottom="@dimen/U_2"
-            android:layout_marginTop="@dimen/U_2"/>
+            android:gravity="center"
+            android:text="@string/missing"
+            android:textColor="?colorOnPrimaryContainer" />
 
         <TextView
             android:id="@+id/manga_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?colorOnSecondaryContainer"
-            android:text="@string/missing"
+            android:layout_marginBottom="@dimen/U_2"
             android:gravity="center"
-            android:layout_marginBottom="@dimen/U_2"/>
+            android:text="@string/missing"
+            android:textColor="?colorOnSecondaryContainer" />
 
-        <include layout="@layout/chapter_number_input" />
+        <Spinner
+            android:id="@+id/list_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/U_2"
+            android:layout_gravity="center"/>
 
-        <include layout="@layout/dec_inc_buttons"/>
+        <Button
+            android:id="@+id/submit_button_dialog"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/U_20"
+            android:layout_height="@dimen/U_6"
+            android:background="@drawable/submit_button"
+            android:elevation="@dimen/U_1"
+            android:text="@string/add_comic_submit"
+            android:textColor="?colorOnSecondary"/>
+
+        <!--<include layout="@layout/chapter_number_input" />
+
+        <include layout="@layout/dec_inc_buttons" />-->
     </LinearLayout>
+
 </FrameLayout>
