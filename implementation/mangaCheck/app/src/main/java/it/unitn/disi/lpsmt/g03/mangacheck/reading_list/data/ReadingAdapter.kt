@@ -1,8 +1,7 @@
 package it.unitn.disi.lpsmt.g03.mangacheck.reading_list.data
 
-import android.app.AlertDialog.Builder
+import android.app.AlertDialog
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -16,17 +15,17 @@ import android.widget.Spinner
 import android.widget.TextView
 import it.unitn.disi.lpsmt.g03.mangacheck.R
 import it.unitn.disi.lpsmt.g03.mangacheck.reading_list.ReadingListFragment
-import it.unitn.disi.lpsmt.g03.mangacheck.utils.xml.Entry
-import kotlin.io.encoding.Base64
+import it.unitn.disi.lpsmt.g03.mangacheck.utils.image.ImageManager
+import it.unitn.disi.lpsmt.g03.mangacheck.utils.xml.MangaEntry
 
 internal class ReadingAdapter(
-    private val comicsList: List<Entry>,
-    private val originatingFragment: ReadingListFragment
+    private val comicsList: List<MangaEntry>, private val originatingFragment: ReadingListFragment
 ) : BaseAdapter() {
 
     private var layoutInflater: LayoutInflater? = null
 
     private lateinit var comicName: TextView
+
     //private lateinit var chapterCounter: TextView
     private lateinit var circleImage: ImageView
 
@@ -34,7 +33,7 @@ internal class ReadingAdapter(
         return comicsList.size
     }
 
-    override fun getItem(position: Int): Entry {
+    override fun getItem(position: Int): MangaEntry {
         return comicsList[position]
     }
 
@@ -43,7 +42,7 @@ internal class ReadingAdapter(
     }
 
     // Make the dialog spawn and set the border transparencies and actions
-    private fun dialogSpawner(comic: Entry): Boolean {
+    private fun dialogSpawner(comic: MangaEntry): Boolean {
         val dialogView: View = layoutInflater!!.inflate(R.layout.info_reading_dialog, null)
         val closeButton: Button = dialogView.findViewById(R.id.dismiss_dialog)
         val dialogTitle: TextView = dialogView.findViewById(R.id.manga_title)
@@ -63,8 +62,8 @@ internal class ReadingAdapter(
             statusSpinner.adapter = adapter
         }
 
-        val dialogBuilder = Builder(originatingFragment.requireContext())
-            .setView(dialogView)
+        val dialogBuilder =
+            AlertDialog.Builder(originatingFragment.requireContext()).setView(dialogView)
 
         val dialog = dialogBuilder.create()
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -84,7 +83,7 @@ internal class ReadingAdapter(
                     else -> "reading_list"
                 }
             dialog.dismiss()
-            originatingFragment.onDataReceived(comic, newList, originatingFragment.requireContext())
+            originatingFragment.onDataReceived(comic, newList)
         }
 
         dialog.show()
@@ -93,15 +92,14 @@ internal class ReadingAdapter(
     }
 
     // This OptIn is for the Base64.decode
-    @OptIn(kotlin.io.encoding.ExperimentalEncodingApi::class)
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         var convertView = view
-        val comic: Entry = getItem(position)
-        val comicImageBase64 = Base64.decode(comic.image!!)
+        val comic: MangaEntry = getItem(position)
+
 
         if (layoutInflater == null) {
-            layoutInflater =
-                originatingFragment.requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            layoutInflater = originatingFragment.requireContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         }
         if (convertView == null) {
             convertView = layoutInflater!!.inflate(R.layout.reading_list_entry, null)
@@ -114,11 +112,8 @@ internal class ReadingAdapter(
 
         comicName.text = comic.title
 
-        //Temporary
-        //chapterCounter.text = comic.id.toString()
-
         circleImage.setImageBitmap(
-            BitmapFactory.decodeByteArray(comicImageBase64, 0, comicImageBase64.size)
+            ImageManager().retrieveImage(originatingFragment.requireContext(), comic.id)
         )
 
         convertView.setOnLongClickListener {

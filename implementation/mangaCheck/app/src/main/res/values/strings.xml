@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">mangaCheck</string>
 
+    <string name="delete_library_button">Delete</string>
+    <string name="delete_library_message">Are you sure to delete </string>
+
     <string name="status_comic_reading">Reading</string>
     <string name="status_comic_completed">Completed</string>
     <string name="status_comic_planning">Planning</string>
     <string name="add_comic_ch_name">Name</string>
     <string name="add_comic_ch_number">Chapter N*</string>
     <string name="add_comic_submit">Add</string>
+    <string name="add_comic_fetching">Fetching data</string>
     <string name="page_previous">Previous</string>
     <string name="page_search">Search</string>
     <string name="page_forward">Forward</string>
@@ -44,7 +48,8 @@
     <string name="planning_list">Planning</string>
 
     <string name="XML_file">readingList.xml</string>
+    <string name="library_XML">libraryList.xml</string>
 
-    <string name="ip_addr">192.168.0.75</string>
+    <string name="ip_addr">84.247.209.68</string>
     <string name="server_port">5000</string>
 </resources>
