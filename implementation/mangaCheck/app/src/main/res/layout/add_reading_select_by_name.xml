@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Natural_99"
+    android:background="?backgroundColor"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:fitsSystemWindows="true">
@@ -61,7 +61,7 @@
         android:layout_height="@dimen/U_6"
         android:layout_marginBottom="@dimen/U_3"
         android:background="@drawable/submit_button"
-        android:textColor="?colorOnSecondary"
+        android:textColor="?colorOnSecondaryContainer"
         android:elevation="@dimen/U_1"
         android:text="@string/page_search"
         app:layout_constraintBottom_toBottomOf="parent"
