@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/libraryFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.library.LibraryFragment"
-        android:label="LibraryFragment" >
+        android:label="LibraryFragment">
         <action
             android:id="@+id/action_libraryFragment_to_addLibraryFragment"
             app:destination="@id/addLibraryFragment" />
@@ -67,10 +67,10 @@
             app:destination="@id/addReadingSetStatusFragment">
             <argument
                 android:name="mangaID"
-                app:argType="integer"/>
+                app:argType="integer" />
             <argument
                 android:name="mangaTitle"
-                app:argType="string"/>
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
@@ -82,22 +82,27 @@
             app:destination="@id/readingListFragment">
             <argument
                 android:name="mangaID"
-                app:argType="integer"/>
+                app:argType="integer" />
             <argument
                 android:name="mangaTitle"
-                app:argType="string"/>
+                app:argType="string" />
             <argument
                 android:name="list"
-                app:argType="string"/>
+                app:argType="string" />
             <argument
                 android:name="mangaDescription"
-                app:argType="string"/>
+                app:argType="string" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/readerFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.reader.ReaderFragment"
-        android:label="ReaderFragment" />
+        android:label="ReaderFragment">
+        <argument
+            android:name="zipPath"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <dialog
         android:id="@+id/searchDialogFragment"
         android:name="it.unitn.disi.lpsmt.g03.mangacheck.search.SearchDialogFragment"
