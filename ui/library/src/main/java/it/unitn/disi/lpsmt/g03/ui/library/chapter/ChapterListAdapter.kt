@@ -48,7 +48,7 @@ internal class ChapterListAdapter(private val context: Context,
     init {
         val myLibraryAdapterEntryPoint = EntryPointAccessors.fromApplication(context,
             ChapterListAdapterEntryPoint::class.java)
-        liveDataset = myLibraryAdapterEntryPoint.provideChapterDao().getAllSorted()
+        liveDataset = myLibraryAdapterEntryPoint.provideChapterDao().getWhereSeriesId(seriesId)
         liveDataset.observe(lifecycleOwner) {
             val maxSize = max(dataSet.size, it.size)
             dataSet = it
@@ -58,7 +58,9 @@ internal class ChapterListAdapter(private val context: Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = ChapterListCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = ChapterListCardBinding.inflate(LayoutInflater.from(parent.context),
+            parent,
+            false)
         return ViewHolder(view)
     }
 

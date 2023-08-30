@@ -2,6 +2,7 @@ package it.unitn.disi.lpsmt.g03.ui.library.chapter
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.database.sqlite.SQLiteConstraintException
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -33,6 +34,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.URISyntaxException
 import java.time.ZonedDateTime
 import java.util.InputMismatchException
 import javax.inject.Inject
@@ -80,12 +82,18 @@ class ChapterAddFragment : Fragment() {
             try {
                 title = testAndSetInputError(mBinding.form.title)
                 chNumber = testAndSetInputError(mBinding.form.number).toInt()
+                testUriError(model.fileUri.value)
             } catch (e: InputMismatchException) {
                 Snackbar.make(requireView(), e.message.toString(), Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             } catch (e: NumberFormatException) {
                 Snackbar.make(requireView(),
                     "Chapter Number is not well formatted",
+                    Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } catch (e: URISyntaxException) {
+                Snackbar.make(requireView(),
+                    "Please select a file",
                     Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -113,17 +121,28 @@ class ChapterAddFragment : Fragment() {
                 mBinding.saveButton.isEnabled = false
                 mBinding.form.root.children.forEach { it.isEnabled = false }
             }
-            db.chapterDao()
-                .insertAll(Chapter(args.series.uid,
-                    title,
-                    chNumber,
-                    ImageLoader.getPagesInCbz(model.fileUri.value,
-                        requireContext().contentResolver,
-                        progress),
-                    0,
-                    ReadingState.READING,
-                    model.fileUri.value,
-                    ZonedDateTime.now()))
+            try {
+                db.chapterDao()
+                    .insertAll(Chapter(args.series.uid,
+                        title,
+                        chNumber,
+                        ImageLoader.getPagesInCbz(model.fileUri.value,
+                            requireContext().contentResolver,
+                            progress),
+                        0,
+                        ReadingState.PLANNING,
+                        model.fileUri.value,
+                        ZonedDateTime.now()))
+            } catch (e: SQLiteConstraintException) {
+                Snackbar.make(requireView(),
+                    "This chapter number is already present",
+                    Snackbar.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    mBinding.saveButton.isEnabled = true
+                    mBinding.form.root.children.forEach { it.isEnabled = true }
+                }
+                return@launch
+            }
             withContext(Dispatchers.Main) {
                 try {
                     findNavController().popBackStack()
@@ -186,5 +205,10 @@ class ChapterAddFragment : Fragment() {
 
         input.error = getString(R.string.required_input)
         throw InputMismatchException(getString(R.string.required_inputs))
+    }
+
+    private fun testUriError(input: Uri?) {
+        if (input == null)
+            throw URISyntaxException("", "The chapter URI is null")
     }
 }
