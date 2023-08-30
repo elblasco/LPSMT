@@ -18,8 +18,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="488" />
-                            <option name="y" value="-299" />
+                            <option name="x" value="500" />
+                            <option name="y" value="185" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -30,8 +30,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="671" />
-                            <option name="y" value="61" />
+                            <option name="x" value="500" />
+                            <option name="y" value="541" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -43,7 +43,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="256" />
-                            <option name="y" value="54" />
+                            <option name="y" value="724" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -74,12 +74,17 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="97" />
+                            <option name="y" value="660" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
                             <entry key="action_library_to_chapter_list">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_library_to_libraryModifyFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -94,13 +99,25 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="libraryModifyFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="256" />
+                            <option name="y" value="368" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="reader_nav">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="481" />
-                            <option name="y" value="480" />
+                            <option name="x" value="500" />
+                            <option name="y" value="897" />
                           </Point>
                         </option>
                       </LayoutPositions>
@@ -112,7 +129,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="256" />
-                            <option name="y" value="410" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
