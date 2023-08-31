@@ -2,14 +2,19 @@ package it.unitn.disi.lpsmt.g03.ui.tracker.category
 
 import android.content.Context
 import android.content.res.Resources
+import android.content.res.TypedArray
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.ActionMode
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
@@ -32,18 +37,25 @@ import it.unitn.disi.lpsmt.g03.data.library.ReadingState
 import it.unitn.disi.lpsmt.g03.data.library.Series
 import it.unitn.disi.lpsmt.g03.data.library.SeriesDao
 import it.unitn.disi.lpsmt.g03.ui.tracker.R
+import it.unitn.disi.lpsmt.g03.ui.tracker.SelectionManager
 import it.unitn.disi.lpsmt.g03.ui.tracker.TrackerFragmentDirections
 import it.unitn.disi.lpsmt.g03.ui.tracker.databinding.TrackerCardBinding
 import it.unitn.disi.lpsmt.g03.ui.tracker.dialog.ModifyDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Integer.max
+import it.unitn.disi.lpsmt.g03.core.R as Rc
 
 class CategoryAdapter(
     private val ctx: Context,
+    private val activity: AppCompatActivity,
     val name: ReadingState,
     private val glide: RequestManager,
     private val manager: FragmentManager,
     private val lifeCycle: LifecycleOwner,
-    private val navController: NavController
+    private val navController: NavController,
+    private val selectionManager: SelectionManager
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     @EntryPoint
@@ -96,7 +108,67 @@ class CategoryAdapter(
         private var chCounter: TextView = view.chCounter
         private var modifyButton: Button = view.modifyButton
 
+        private inner class SelectionCallback(val color: SurfaceColor) : ActionMode.Callback {
+
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                mode?.menuInflater?.inflate(Rc.menu.menu_actions, menu)
+                return true
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                view.root.setCardBackgroundColor(color.colorSurface)
+                return when (item?.itemId) {
+                    Rc.id.action_delete -> {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            selectionManager.selected?.let { seriesDao.delete(it) }
+                        }
+                        selectionManager.actionMode?.finish()
+                        selectionManager.actionMode = null
+                        true
+                    }
+
+                    Rc.id.action_modify -> {
+                        val dialogFragment = selectionManager.selected?.let {
+                            ModifyDialog(ctx,
+                                it)
+                        }
+                        dialogFragment?.show(manager, "ModifyDialog")
+                        selectionManager.actionMode?.finish()
+                        selectionManager.actionMode = null
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                view.root.setCardBackgroundColor(color.colorSurface)
+                selectionManager.selected = null
+                selectionManager.actionMode?.finish()
+                selectionManager.actionMode = null
+            }
+        }
+
+        private inner class SurfaceColor(val colorSurface: Int, val colorSurfaceVariant: Int)
+
+        private fun getColor(): SurfaceColor {
+            val typedValue = TypedValue()
+            val a: TypedArray = view.root.context.obtainStyledAttributes(typedValue.data,
+                intArrayOf(com.google.android.material.R.attr.colorSurface,
+                    com.google.android.material.R.attr.colorSurfaceVariant))
+            val colorSurface = a.getColor(0, 0)
+            val colorSurfaceVariant = a.getColor(a.getIndex(1), 0)
+            a.recycle()
+            return SurfaceColor(colorSurface, colorSurfaceVariant)
+        }
+
         fun bind(item: Series) {
+
+            val color = getColor()
+
             glide.load(item.imageUri)
                 .error(glide.load(R.drawable.baseline_broken_image_24))
                 .apply(requestOptions)
@@ -106,7 +178,7 @@ class CategoryAdapter(
             seriesTitle.text = item.title
 
             // Set the Series chapter counter in the card
-            if (item.chapters != null) chCounter.text = item.chapters.toString()
+            if (item.chapters != null) chCounter.text = "ch. ${item.chapters.toString()}"
             else chCounter.text = null
 
             modifyButton.setOnClickListener {
@@ -116,6 +188,21 @@ class CategoryAdapter(
 
             view.root.setOnClickListener {
                 onClickToReader(item)
+            }
+
+            view.root.setOnLongClickListener {
+                view.root.setCardBackgroundColor(color.colorSurfaceVariant)
+                if (selectionManager.actionMode == null) {
+                    val currentActivity = activity
+                    selectionManager.actionMode = currentActivity.startSupportActionMode(
+                        SelectionCallback(color))
+                    selectionManager.selected = item
+                    selectionManager.actionMode?.title = "${selectionManager.selected?.title} selected"
+                } else {
+                    selectionManager.selected = item
+                    selectionManager.actionMode?.title = "${selectionManager.selected?.title} selected"
+                }
+                true
             }
         }
 

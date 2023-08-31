@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,7 @@ class TrackerFragment : Fragment() {
 
     @Inject
     lateinit var db: AppDatabase.AppDatabaseInstance
+    private val selectionManager = SelectionManager(null,null)
 
     override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,6 +54,13 @@ class TrackerFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        selectionManager.selected = null
+        selectionManager.actionMode?.finish()
+        selectionManager.actionMode = null
+    }
+
     private fun initUI() {
         val categoryAdapterList = createCategoryAdapter()
         trackerAdapter = TrackerAdapter(categoryAdapterList, requireContext())
@@ -66,11 +75,13 @@ class TrackerFragment : Fragment() {
         val adapters = mutableListOf<CategoryAdapter>()
         ReadingState.values().forEach { statusName ->
             adapters.add(CategoryAdapter(requireContext(),
+                activity as AppCompatActivity,
                 statusName,
                 Glide.with(this@TrackerFragment),
                 parentFragmentManager,
                 viewLifecycleOwner,
-                findNavController()))
+                findNavController(),
+                selectionManager))
         }
         return adapters
     }
